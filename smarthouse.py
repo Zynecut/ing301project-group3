@@ -1,6 +1,7 @@
 from devices import Device
 from typing import List, Optional
 
+"""Blir vel noe av dette også"""
 
 class Room:
     """Representerer et rom i en etasje i ett hus.
