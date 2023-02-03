@@ -1,5 +1,4 @@
-from smarthouse import SmartHouse
-from devices import *
+from classes.smarthouse import SmartHouse
 
 
 def build_demo_house() -> SmartHouse:
