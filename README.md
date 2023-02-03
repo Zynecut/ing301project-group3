@@ -1,6 +1,6 @@
 # Starterkode ING301 Prosjekt Del A
 
-#### [Project demo!](https://github.com/selabhvl/ing301public/blob/main/project/demo.md))
+#### [Project demo!](https://github.com/selabhvl/ing301public/blob/main/project/demo.md)
 #### [Oppgavebeskrivelsen!](https://github.com/selabhvl/ing301public/blob/main/project/index.md)
 #### [Part A!](https://github.com/selabhvl/ing301public/blob/main/project/part_A.md)
 
