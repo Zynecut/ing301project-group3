@@ -7,9 +7,6 @@ from typing import List, Optional
 
 """Blir vel noe av dette også"""
 
-
-
-
 class SmartHouse:
     """Den sentrale klasse i et smart hus system.
         Den forvalter etasjer, rom og enheter.
