@@ -11,8 +11,6 @@ https://drive.google.com/file/d/18YugF54XZ0t5BXmAETlHB5LQ1BtssIe3/view?usp=shari
 De obligatoriske prosjekt i ING301 er basert på den samme case-studien: 
 Å bygge et system som kan styre et "_Smart Home_", sammenlignbar med f.eks. [Home Assistant](https://www.home-assistant.io/).
 
-![Smart Home Infografikk](../resources/images/smart-home.jpg)
-
 ### Intro
 
 _Smarthus_ er et begrep som dekker forskjellige typer _hjemmeautomatisering_.
