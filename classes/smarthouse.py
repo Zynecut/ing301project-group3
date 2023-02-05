@@ -3,9 +3,8 @@ from classes.room import *
 from classes.floor import *
 from typing import List, Optional
 
-
-
 """Blir vel noe av dette også"""
+
 
 class SmartHouse:
     """Den sentrale klasse i et smart hus system.
@@ -13,23 +12,32 @@ class SmartHouse:
         Også styres alle enheter sentralt herifra."""
 
     def __init__(self):
-        self.floors = []
+        self.floorlist = []
 
-    def create_floor(self) -> Floor:
+    def create_floor(self, floor_no: int) -> Floor:
         """Legger til en etasje og gi den tilbake som objekt.
             Denne metoden ble kalt i initialiseringsfasen når
             strukturen av huset bygges opp-."""
-        return NotImplemented
+        somefloor = Floor(floor_no)
+        self.floorlist.append(somefloor)
+        return Floor(somefloor)
 
     def create_room(self, floor_no: int, area: float, name: str = None) -> Room:
         """Legger til et rom i en etasje og gi den tilbake som objekt.
             Denne metoden ble kalt i initialiseringsfasen når
             strukturen av huset bygges opp-."""
-        return NotImplemented
+        someroom = Room(area, name)
+        self.floorlist[floor_no].roomlist.append(someroom)
+        return someroom
 
     def get_no_of_rooms(self) -> int:
         """Gir tilbake antall rom i huset som heltall"""
-        return NotImplemented
+        rooms = 0
+        for x in self.floorlist:
+            if hasattr(x, 'roomlist'):
+                for y in x.roomlist:
+                    rooms += 1
+        return rooms
 
     def get_all_devices(self) -> List[Device]:
         """Gir tilbake en liste med alle enheter som er registrert i huset."""
@@ -37,11 +45,23 @@ class SmartHouse:
 
     def get_all_rooms(self) -> List[Room]:
         """Gir tilbake en liste med alle rom i huset."""
-        return NotImplemented
+        rooms = []
+        for x in self.floorlist:
+            if hasattr(x, 'roomlist'):
+                for y in x.roomlist:
+                    rooms.append(y)
+        return rooms
 
     def get_total_area(self) -> float:
         """Regner ut det totale arealet av huset."""
-        return NotImplemented
+        toatlarea = 0
+        for x in self.floorlist:
+            if hasattr(x, 'roomlist'):
+                for y in x.roomlist:
+                    if hasattr(y, 'area'):
+                        toatlarea += y.area
+
+        return toatlarea
 
     def register_device(self, device: Device, room: Room):
         """Registrerer en enhet i et gitt rom."""

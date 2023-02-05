@@ -6,4 +6,6 @@ class Floor:
 
     def __init__(self, floor_no: int):
         self.floor_no = floor_no
-        self.rooms = [Room]
+        self.roomlist = []
+    def __repr__(self):
+        return f"(Floor nr {self.floor_no +1})"

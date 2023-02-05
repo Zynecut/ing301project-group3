@@ -3,7 +3,25 @@ from classes.smarthouse import SmartHouse
 
 def build_demo_house() -> SmartHouse:
     house = SmartHouse()
+    house.create_floor(0) #første etasje = 0
+    house.create_room(0, 39.75, "Livingroom_kitchen")
+    house.create_room(0, 6.3, "Bathroom")
+    house.create_room(0, 13.5, "Entrance")
+    house.create_room(0, 8, "GuestRoom1")
+    house.create_floor(1)
+    house.create_room(1, 11.75, "Office")
+    house.create_room(1, 9.25, "Bathroom2")
+    house.create_room(1, 8, "GuestRoom2")
+    house.create_room(1, 10, "GuestRoom3")
+    house.create_room(1, 4, "DressingRoom")
+    house.create_room(1, 17, "MasterBedroom")
+    house.create_room(1, 0, "Hallway")
     # TODO! her skal du legge inn etasjer, rom og enheter som at resultatet tilsvarer demo huset!
+    # debugging
+    # a = house.get_total_area()
+    # b = house.get_no_of_rooms()
+    # c = house.get_all_rooms()
+
     return house
 
 
@@ -97,4 +115,4 @@ def main(smart_house: SmartHouse):
 
 if __name__ == '__main__':
     house = build_demo_house()
-    main(house)
+    #main(house)
