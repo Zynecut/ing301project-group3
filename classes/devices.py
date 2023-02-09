@@ -19,9 +19,11 @@ class Actuator(Device):
 class Sensor(Device):
     def __init__(self, nr: int, typ: str, produsent: str, produktnavn: str, serienummer: str, maaltVerdi):
         self.maaltVerdi = maaltVerdi
-        self.unit = ""
 
         super().__init__(nr, typ, produsent, produktnavn, serienummer)  # sender variablene til parent class Device
+
+    def __repr__(self):
+        return f'Recorded Value: {self.maaltVerdi}, Annotation: {}'
 
     def GetReading(self):
         pass
