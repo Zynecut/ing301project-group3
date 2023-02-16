@@ -19,7 +19,6 @@ def build_demo_house() -> SmartHouse:
     house.create_room(1, 10, "Hallway")
     # Sensors
     house.load_devicelist()
-    a=1
     house.manualy_alter_sensordevice(house.find_device_by_serial_no("4cb686fe-6448-4cf6"), '%', 68)
     house.manualy_alter_sensordevice(house.find_device_by_serial_no("e237beec-2675-4cb0"), '°C', 1.3)
     house.manualy_alter_sensordevice(house.find_device_by_serial_no("c8bb5601-e850-4a80"), 'kWh', 0)
@@ -28,14 +27,6 @@ def build_demo_house() -> SmartHouse:
     house.manualy_alter_sensordevice(house.find_device_by_serial_no("c76688cc-3692-4aa3"), 'g/m^2', 0.08)
     house.manualy_alter_sensordevice(house.find_device_by_serial_no("8ceb53b2-e88f-4e8c"), '%', 52)
     house.manualy_alter_sensordevice(house.find_device_by_serial_no("481e94bd-ff50-40ea"), '°C', 16.1)
-
-    a = 1
-
-    # debugging
-    #a = house.get_total_area()
-    #b = house.get_no_of_rooms()
-    #c = house.get_all_rooms()
-    house.load_devicelist()
 
     return house
 

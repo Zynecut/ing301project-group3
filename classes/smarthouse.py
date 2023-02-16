@@ -84,6 +84,12 @@ class SmartHouse:
 
     def get_all_devices(self) -> List[Device]:
         """Gir tilbake en liste med alle enheter som er registrert i huset."""
+        somelist = []
+        for floor in self.floorlist:
+            for room in floor.roomlist:
+                for device in room.devicelist:
+                    somelist.append(device)
+        return somelist
 
     def get_total_area(self) -> float:
         """Regner ut det totale arealet av huset."""
@@ -95,37 +101,59 @@ class SmartHouse:
                         totalarea += y.area
 
         return totalarea
-    def get_no_of_devices(self):
+    def get_all_devices_in_room(self, room: Room) -> List[Device]:
+        """Gir tilbake en liste med alle enheter som er registrert på rommet."""
+        somelist = []
+        for device in room.devicelist:
+            somelist.append(device)
+        return somelist
+    def get_no_of_devices(self) -> int:
         """Gir tilbake antall registrerte enheter i huset."""
-        return NotImplemented
+        x = self.get_all_devices()
+        return len(x)
 
     def get_no_of_sensors(self):
         """Git tilbake antall av registrerte sensorer i huset."""
-        return NotImplemented
+        x = self.get_all_devices()
+        sensor = 0
+        for y in x:
+            if isinstance(y, Sensor):
+                sensor += 1
+        return sensor
 
     def get_no_of_actuators(self):
         """Git tilbake antall av registrerte aktuatorer i huset."""
-        return NotImplemented
+        x = self.get_all_devices()
+        actuator = 0
+        for y in x:
+            if isinstance(y, Actuator):
+                actuator += 1
+        return actuator
 
     def move_device(self, device: Device, from_room: Room, to_room: Room):
         """Flytter en enhet fra et gitt romm til et annet."""
-        return NotImplemented
+        from_room.devicelist.remove(device)
+        to_room.devicelist.append(device)
 
-    def get_room_with_device(self, device: Device):
+    def get_room_with_device(self, device2: Device):
         """Gir tilbake rommet der en gitt enhet er resitrert."""
-        return NotImplemented
-
-    def get_all_devices_in_room(self, room: Room) -> List[Device]:
-        """Gir tilbake en liste med alle enheter som er registrert på rommet."""
-        return NotImplemented
+        for floor in self.floorlist:
+            for room in floor.roomlist:
+                for device in room.devicelist:
+                    if device == device2:
+                        return room
+        return None
 
     def turn_on_lights_in_room(self, room: Room):
         """Slår på alle enheter av type 'Smart Lys' i et gitt rom."""
-        return NotImplemented
-
+        for device in room.devicelist:
+            if isinstance(device, Actuator) and device.typ == "Smart Lys":
+                device.on_off = True
     def turn_off_lights_in_room(self, room: Room):
         """Slår av alle enheter av type 'Smart Lys' i et gitt rom."""
-        return NotImplemented
+        for device in room.devicelist:
+            if isinstance(device, Actuator) and device.typ == "Smart Lys":
+                device.on_off = False
 
     def get_temperature_in_room(self, room: Room) -> Optional[float]:
         """Prøver å finne ut temperaturen i et gitt rom ved å finne

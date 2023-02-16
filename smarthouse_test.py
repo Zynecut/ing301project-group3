@@ -6,7 +6,7 @@ class SmartHouseTest(unittest.TestCase):
     house = main.build_demo_house()
 
     def test_no_of_rooms(self):
-        self.assertEqual(11, SmartHouseTest.house.get_no_of_rooms())  # add assertion here
+        self.assertEqual(12, SmartHouseTest.house.get_no_of_rooms())  # add assertion here
 
     def test_area(self):
         self.assertEqual(156.55, SmartHouseTest.house.get_total_area())
@@ -18,7 +18,7 @@ class SmartHouseTest(unittest.TestCase):
 
     def test_listings(self):
         rooms = SmartHouseTest.house.get_all_rooms()
-        self.assertEqual(11, len(rooms))
+        self.assertEqual(12, len(rooms))
         devices = SmartHouseTest.house.get_all_devices()
         self.assertEqual(31, len(devices))
         dev15 = SmartHouseTest.house.find_device_by_serial_no("c28b6e75-d565-4678")
