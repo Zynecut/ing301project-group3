@@ -158,13 +158,21 @@ class SmartHouse:
     def get_temperature_in_room(self, room: Room) -> Optional[float]:
         """Prøver å finne ut temperaturen i et gitt rom ved å finne
         enheter av type 'Temperatursensor' der og gi tilake verdien som kommatall."""
-        return NotImplemented
+        for device in room.devicelist:
+            if isinstance(device, Sensor) and device.typ == "Temperatursensor":
+                 return device.maaltVerdi
+
 
     def set_temperature_in_room(self, room: Room, temperature: float):
         """Prøver å sette temperaturen i et gitt rom ved å sette alle aktuatorer
         som kan påvirke temperatur ('Paneloven', 'Varmepumpe', ...) til ønsket
         temperatur."""
-        return NotImplemented
+        for device in room.devicelist:
+            if isinstance(device, Actuator) and (device.typ == "Paneloven" or device.typ == "Varmepumpe" or device.typ == "Gulvvarmepanel"):
+                device.on_off = True
+                device.setValue = temperature
+
+
 
     def manualy_alter_sensordevice(self, device: Device, unit: str = "", maaltverdi: float = ""):
         device.maaltVerdi = maaltverdi

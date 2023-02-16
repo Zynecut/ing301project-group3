@@ -15,10 +15,13 @@ class Actuator(Device):
         super().__init__(nr, typ, produsent, produktnavn, serienummer)  # henter variablene til parent class Device
 
     def __repr__(self):
-        if self.on_off:
-            paster = "ON"
+        if self.setValue != 0.0 and (self.typ == "Paneloven" or self.typ == "Varmepumpe" or self.typ == "Gulvvarmepanel"):
+            paster = f'{self.setValue} °C'
         else:
-            paster = "OFF"
+            if self.on_off:
+                paster = "ON"
+            else:
+                paster = "OFF"
         return f"Aktuator({self.serieNummer}) TYPE: {self.typ} STATUS: {paster} PRODUCT DETAILS: {self.produsent} {self.produktNavn}"
 
 
