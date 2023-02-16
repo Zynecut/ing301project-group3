@@ -11,9 +11,9 @@ class Device:
         pass
 
 class Actuator(Device):
-    def __init__(self, nr: int, typ: str, produsent: str, produktnavn: str, serienummer: str):
+    def __init__(self, nr: int, typ: str, produsent: str, produktnavn: str, serienummer: str, on_off: bool = False):
         self.setValue = float(0)  # casting float
-        self.on_off = bool(False)  # casting bool
+        self.on_off = on_off  # casting bool
         self.unit = ""
 
         super().__init__(nr, typ, produsent, produktnavn, serienummer)  # henter variablene til parent class Device
@@ -22,9 +22,9 @@ class Actuator(Device):
         return f'Set Value: {self.setValue}, On/Off: {self.on_off}'
 
 class Sensor(Device):
-    def __init__(self, nr: int, typ: str, produsent: str, produktnavn: str, serienummer: str, maaltVerdi, unit):
+    def __init__(self, nr: int, typ: str, produsent: str, produktnavn: str, serienummer: str, unit):
         super().__init__(nr, typ, produsent, produktnavn, serienummer)  # henter variablene til parent class Device
-        self.maaltVerdi = maaltVerdi
+        self.maaltVerdi = float(0)
         self.unit = unit
 
     def createSensor(self):
