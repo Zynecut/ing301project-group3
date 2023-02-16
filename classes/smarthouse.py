@@ -2,7 +2,7 @@ from classes.devices import Device
 from classes.room import *
 from classes.floor import *
 from typing import List, Optional
-
+import os
 """Blir vel noe av dette også"""
 
 
@@ -39,10 +39,6 @@ class SmartHouse:
                     rooms += 1
         return rooms
 
-    def get_all_devices(self) -> List[Device]:
-        """Gir tilbake en liste med alle enheter som er registrert i huset."""
-        return NotImplemented
-
     def get_all_rooms(self) -> List[Room]:
         """Gir tilbake en liste med alle rom i huset."""
         rooms = []
@@ -52,21 +48,53 @@ class SmartHouse:
                     rooms.append(y)
         return rooms
 
+    def load_devicelist(self):
+        """Henter sensor og actuators fra data.txt liste."""
+        path = os.getcwd()
+        my_file = open((path + "\classes\data.txt"), "r")
+        data = my_file.read()
+        data_into_list = data.split("\n")
+        for x in data_into_list:
+            y = x.split(',')
+            if y[6] == "Actuator":
+                device = Actuator(y[0], y[1], y[2], y[3], y[4])
+            else:
+                device = Sensor(y[0], y[1], y[2], y[3], y[4])
+            room = self.get_room(y[5])
+            self.register_device(device, room)
+
+    def register_device(self, device: Device, room: Room):
+        """Registrerer en enhet i et gitt rom."""
+        room.devicelist.append(device)
+
+    def get_room(self, roomname: str) -> Room:
+        for floor in self.floorlist:
+            for room in floor.roomlist:
+                if room.name == roomname:
+                    return room
+        return None
+
+    def find_device_by_serial_no(self, serial_no: str) -> Device:
+        for floor in self.floorlist:
+            for room in floor.roomlist:
+                for device in room.devicelist:
+                    if device.serieNummer == serial_no:
+                        return device
+        return None
+
+    def get_all_devices(self) -> List[Device]:
+        """Gir tilbake en liste med alle enheter som er registrert i huset."""
+
     def get_total_area(self) -> float:
         """Regner ut det totale arealet av huset."""
-        toatlarea = 0
+        totalarea = 0
         for x in self.floorlist:
             if hasattr(x, 'roomlist'):
                 for y in x.roomlist:
                     if hasattr(y, 'area'):
-                        toatlarea += y.area
+                        totalarea += y.area
 
-        return toatlarea
-
-    def register_device(self, device: Device, room: Room):
-        """Registrerer en enhet i et gitt rom."""
-        return NotImplemented
-
+        return totalarea
     def get_no_of_devices(self):
         """Gir tilbake antall registrerte enheter i huset."""
         return NotImplemented
@@ -81,11 +109,6 @@ class SmartHouse:
 
     def move_device(self, device: Device, from_room: Room, to_room: Room):
         """Flytter en enhet fra et gitt romm til et annet."""
-        return NotImplemented
-
-    def find_device_by_serial_no(self, serial_no: str) -> Optional[Device]:
-        """Prøver å finne en enhet blant de registrerte enhetene ved å
-        søke opp dens serienummer."""
         return NotImplemented
 
     def get_room_with_device(self, device: Device):
@@ -114,3 +137,8 @@ class SmartHouse:
         som kan påvirke temperatur ('Paneloven', 'Varmepumpe', ...) til ønsket
         temperatur."""
         return NotImplemented
+
+    def manualy_alter_sensordevice(self, device: Device, unit: str = "", maaltverdi: float = ""):
+        device.maaltVerdi = maaltverdi
+        device.unit = unit
+

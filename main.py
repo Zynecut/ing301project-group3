@@ -8,7 +8,7 @@ def build_demo_house() -> SmartHouse:
     house.create_room(0, 6.3, "Bathroom1")
     house.create_room(0, 13.5, "Entrance")
     house.create_room(0, 8, "GuestRoom1")
-    house.create_room(0, 19, "Garage")
+    house.create_room(0, 19, "Garage_outside")
     house.create_floor(1)
     house.create_room(1, 11.75, "Office")
     house.create_room(1, 9.25, "Bathroom2")
@@ -17,11 +17,25 @@ def build_demo_house() -> SmartHouse:
     house.create_room(1, 4, "DressingRoom")
     house.create_room(1, 17, "MasterBedroom")
     house.create_room(1, 10, "Hallway")
-    # TODO! her skal du legge inn etasjer, rom og enheter som at resultatet tilsvarer demo huset!
+    # Sensors
+    house.load_devicelist()
+    a=1
+    house.manualy_alter_sensordevice(house.find_device_by_serial_no("4cb686fe-6448-4cf6"), '%', 68)
+    house.manualy_alter_sensordevice(house.find_device_by_serial_no("e237beec-2675-4cb0"), '°C', 1.3)
+    house.manualy_alter_sensordevice(house.find_device_by_serial_no("c8bb5601-e850-4a80"), 'kWh', 0)
+    house.manualy_alter_sensordevice(house.find_device_by_serial_no("d16d84de-79f1-4f9a"), '°C', 18.1)
+    house.manualy_alter_sensordevice(house.find_device_by_serial_no("3b06cf0f-8494-458b"), 'kWh', 1.5)
+    house.manualy_alter_sensordevice(house.find_device_by_serial_no("c76688cc-3692-4aa3"), 'g/m^2', 0.08)
+    house.manualy_alter_sensordevice(house.find_device_by_serial_no("8ceb53b2-e88f-4e8c"), '%', 52)
+    house.manualy_alter_sensordevice(house.find_device_by_serial_no("481e94bd-ff50-40ea"), '°C', 16.1)
+
+    a = 1
+
     # debugging
-    a = house.get_total_area()
-    b = house.get_no_of_rooms()
-    c = house.get_all_rooms()
+    #a = house.get_total_area()
+    #b = house.get_no_of_rooms()
+    #c = house.get_all_rooms()
+    house.load_devicelist()
 
     return house
 
