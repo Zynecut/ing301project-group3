@@ -8,4 +8,4 @@ class Floor:
         self.floor_no = floor_no
         self.roomlist = []
     def __repr__(self):
-        return f"(Floor nr {self.floor_no +1})"
+        return f"(Floor nr {self.floor_no})"

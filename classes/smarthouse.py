@@ -22,12 +22,13 @@ class SmartHouse:
         self.floorlist.append(somefloor)
         return Floor(somefloor)
 
-    def create_room(self, floor_no: int, area: float, name: str = None) -> Room:
+    def create_room(self, floor_no: int, area: float, name: str = None, room_id: int = None) -> Room:
         """Legger til et rom i en etasje og gi den tilbake som objekt.
             Denne metoden ble kalt i initialiseringsfasen når
             strukturen av huset bygges opp-."""
-        someroom = Room(area, name)
-        self.floorlist[floor_no].roomlist.append(someroom)
+        someroom = Room(area, name, room_id)
+        floor = self.get_floor(floor_no)
+        floor.roomlist.append(someroom)
         return someroom
 
     def get_no_of_rooms(self) -> int:
@@ -60,20 +61,31 @@ class SmartHouse:
                 device = Actuator(y[0], y[1], y[2], y[3], y[4])
             else:
                 device = Sensor(y[0], y[1], y[2], y[3], y[4])
-            room = self.get_room(y[5])
+            room = self.get_room_by_name(y[5])
             self.register_device(device, room)
 
-    def register_device(self, device: Device, room: Room):
+    def register_device(self, device, room: Room):
         """Registrerer en enhet i et gitt rom."""
         room.devicelist.append(device)
 
-    def get_room(self, roomname: str) -> Room:
+    def get_floor(self, floor_no: int) -> Floor:
+        for floor in self.floorlist:
+            if floor.floor_no == floor_no:
+                return floor
+        return None
+
+    def get_room_by_name(self, roomname: str) -> Room:
         for floor in self.floorlist:
             for room in floor.roomlist:
                 if room.name == roomname:
                     return room
         return None
-
+    def get_room_by_id(self,room_id: int)-> Room:
+        for floor in self.floorlist:
+            for room in floor.roomlist:
+                if room.ID == room_id:
+                    return room
+        return None
     def find_device_by_serial_no(self, serial_no: str) -> Device:
         for floor in self.floorlist:
             for room in floor.roomlist:
@@ -81,7 +93,13 @@ class SmartHouse:
                     if device.serieNummer == serial_no:
                         return device
         return None
-
+    def find_device_by_id(self,id_no: int)-> Device:
+        for floor in self.floorlist:
+            for room in floor.roomlist:
+                for device in room.devicelist:
+                    if device.nr == id_no:
+                        return device
+        return None
     def get_all_devices(self) -> List[Device]:
         """Gir tilbake en liste med alle enheter som er registrert i huset."""
         somelist = []
@@ -171,7 +189,6 @@ class SmartHouse:
             if isinstance(device, Actuator) and (device.typ == "Paneloven" or device.typ == "Varmepumpe" or device.typ == "Gulvvarmepanel"):
                 device.on_off = True
                 device.setValue = temperature
-
 
 
     def manualy_alter_sensordevice(self, device: Device, unit: str = "", maaltverdi: float = ""):
