@@ -5,18 +5,20 @@ from classes.devices import *
 #
 # endret en entry, panelovn serial nr fra 'd16d84de-79f1-4f9a' til 'd16d84de-79f1-4f9b' ettersom det var 2 entries
 #
-def load_demo_house(persistence: SmartHousePersistence) -> SmartHouse:
-    result = SmartHouse()
-    # adds rooms and floors
-    rooms = persistence.query("SELECT * FROM  rooms;")
+
+
+def add_rooms_floors(result, persistence):
+    rooms = persistence.query("SELECT * FROM rooms")
     for x in rooms:
         if(result.get_floor(x['floor']) == None):
             result.create_floor(x['floor'])
         if result.get_room_by_name(x['name']) == None:
             result.create_room(x['floor'], x['area'], x['name'], x['id'])
-    # adds actuators and sensors to the various rooms
-    devices = persistence.query("SELECT * FROM  devices;")
 
+
+def add_actuators_and_sensors(result, persistence):
+    # adds actuators and sensors to the various rooms
+    devices = persistence.query("SELECT * FROM devices")
     for x in devices:
         if(result.find_device_by_serial_no(x['serial_no']) == None):
             if("måler" in x['type']):
@@ -27,6 +29,8 @@ def load_demo_house(persistence: SmartHousePersistence) -> SmartHouse:
                 somedevice = Actuator(x['id'], x['type'], x['producer'], x['product_name'], x['serial_no'])
             someroom = result.get_room_by_id(x['room'])
             result.register_device(somedevice, someroom)
+
+def add_load_sensors_actuator_values(result, persistence):
     # load latest sensor values to sensors
     measurements = persistence.query("select time_stamp, device ,value from measurements m1 "
                                "WHERE time_stamp = (SELECT MAX(time_stamp) "
@@ -38,8 +42,28 @@ def load_demo_house(persistence: SmartHousePersistence) -> SmartHouse:
         if somedevice != None:
             result.manualy_alter_sensordevice(somedevice, maaltverdi=x['value'])
 
-    return result
+    actuatorvalues = persistence.query("SELECT * FROM actuators")
+    for x in actuatorvalues:
+        somedevice = result.find_device_by_serial_no(x['serial_no'])
+        if somedevice != None:
+            somedevice.on_off = x['on_off']
+            somedevice.setValue = x['setvalue']
+            somedevice.unit = x['unit']
 
+
+
+def load_demo_house(persistence: SmartHousePersistence) -> SmartHouse:
+    result = SmartHouse()
+    add_rooms_floors(result, persistence)
+    add_actuators_and_sensors(result, persistence)
+    add_load_sensors_actuator_values(result, persistence)
+
+    return result
+def add2db(p, device: Actuator):
+    injectstring = "INSERT INTO actuators (setvalue, on_off, unit, serial_no)" \
+                   "VALUES ('{0}', '{1}', '{2}', '{3}');".format(device.setValue,device.on_off,device.unit,device.serieNummer)
+    p.injector(injectstring)
+    pass
 def build_demo_house() -> SmartHouse:
     house = SmartHouse()
     house.create_floor(0) #første etasje = 0
