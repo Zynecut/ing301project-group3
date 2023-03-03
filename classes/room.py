@@ -7,7 +7,7 @@ class Room:
     def __init__(self, area: float, name: str = None):
         self.area = area
         self.name = name
-        self.devicelist = [Device]
+        self.devicelist = []
 
     def __repr__(self):
         return f"{self.name} ({self.area} m^2)"

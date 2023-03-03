@@ -6,6 +6,7 @@
 
 # Felles Oppgavekart
 https://app.diagrams.net/?src=about#G1XscoiYsE4gakWf3QXrJ5cnRyZBRD1707
+![](img.png)
 
 ## Programmeringsprosjekt: Smart Home
 
