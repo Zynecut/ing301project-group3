@@ -112,7 +112,7 @@ class SmartHouseAnalytics:
         This function can be seen as a simplified version of the DataFrame.describe()
         function that exists in Pandas:
         https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html?highlight=describe
-        """ # FUCK YOU PANDAS!!!
+        """ # I HATE YOU PANDAS!!!
         querystring = "select avg(m.value), min(m.value),max(m.value),m.device, d.id, d.room, r.id, r.name " \
                       "from measurements as m " \
                       "left join devices as d on m.device=d.id " \
@@ -151,6 +151,7 @@ class SmartHouseAnalytics:
         the_outer = [None]*24
         returnlist = []
         i = 0
+        # EPIC HACK FOR LACK OF SQL SKILLS
         for row in the_outer:
             the_outer[i] = []
             i += 1
