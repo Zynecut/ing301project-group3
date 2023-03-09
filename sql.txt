@@ -1,0 +1,19 @@
+create Table sensors(
+	maaltverdi REAL,
+	unit varchar(255),
+	serial_no TEXT,
+	foreign key (serial_no) REFERENCES devices(serial_no)
+);
+
+
+create Table actuators(
+	setvalue REAL,
+	on_off boolean,
+	unit varchar(255),
+	serial_no TEXT,
+	foreign key (serial_no) REFERENCES devices(serial_no)
+);
+
+
+
+
